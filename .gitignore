@@ -1,6 +1,5 @@
 # Object files
-./*/*.o
-./objs/*.o
+*.o
 
 # Executables
 philo
