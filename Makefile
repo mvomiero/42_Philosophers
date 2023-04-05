@@ -6,17 +6,19 @@
 #    By: mvomiero <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/04/04 15:47:25 by mvomiero          #+#    #+#              #
-#    Updated: 2023/04/04 16:34:20 by mvomiero         ###   ########.fr        #
+#    Updated: 2023/04/05 11:19:24 by mvomiero         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME	= philo
 CC		= gcc
-CFLAGS	= -Werror -Wall -Wextra 
+CFLAGS	= -Werror -Wall -Wextra
 #-pthread
 
 SRC_PATH = srcs/
-SRC		=	main.c 
+SRC		=	main.c \
+			init.c \
+			parsing.c
 SRCS	= $(addprefix $(SRC_PATH), $(SRC))
 
 OBJ_PATH = objs/
