@@ -6,7 +6,7 @@
 /*   By: mvomiero <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/05 10:35:50 by mvomiero          #+#    #+#             */
-/*   Updated: 2023/04/07 13:06:52 by mvomiero         ###   ########.fr       */
+/*   Updated: 2023/04/07 15:23:28 by mvomiero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,10 +75,14 @@ t_data	*init_data(int ac, char **av);
 /* EXIT_ERROR */
 
 void	free_data(t_data *data);
+void	destroy_mutexes(t_data *data);
+
 
 /* DINNER */
 
 bool	start_simulation(t_data *data);
+void	stop_simulation(t_data	*data);
+
 
 /* PHILOSOPHER */
 

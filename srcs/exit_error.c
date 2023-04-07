@@ -6,7 +6,7 @@
 /*   By: mvomiero <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/05 12:04:03 by mvomiero          #+#    #+#             */
-/*   Updated: 2023/04/05 12:22:30 by mvomiero         ###   ########.fr       */
+/*   Updated: 2023/04/07 15:22:30 by mvomiero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,3 +34,17 @@ void	free_data(t_data *data)
 	free(data);
 }
 
+void	destroy_mutexes(t_data *data)
+{
+	unsigned int	i;
+
+	i = 0;
+	while (i < data->nb_philos)
+	{
+		pthread_mutex_destroy(&data->fork_locks[i]);
+		pthread_mutex_destroy(&data->philos[i]->meal_time_lock);
+		i++;
+	}
+	pthread_mutex_destroy(&data->write_lock);
+	pthread_mutex_destroy(&data->sim_stop_lock);
+}
