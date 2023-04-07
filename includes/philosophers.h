@@ -6,7 +6,7 @@
 /*   By: mvomiero <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/05 10:35:50 by mvomiero          #+#    #+#             */
-/*   Updated: 2023/04/05 11:10:42 by mvomiero         ###   ########.fr       */
+/*   Updated: 2023/04/07 13:06:52 by mvomiero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,16 @@ typedef struct s_philo
 	t_data				*data;
 }	t_philo;
 
+typedef enum e_status
+{
+	DIED = 0,
+	EATING = 1,
+	SLEEPING = 2,
+	THINKING = 3,
+	GOT_FORK_1 = 4,
+	GOT_FORK_2 = 5
+}	t_status;
+
 
 /* PARSING */
 
@@ -61,6 +71,39 @@ int	int_atoi(char *str);
 /* INITIALIZATION */
 
 t_data	*init_data(int ac, char **av);
+
+/* EXIT_ERROR */
+
+void	free_data(t_data *data);
+
+/* DINNER */
+
+bool	start_simulation(t_data *data);
+
+/* PHILOSOPHER */
+
+void	*philosopher(void *args);
+
+/* UTILS_TIME */
+
+time_t	get_time_in_ms(void);
+void	philo_sleep(t_data *data, time_t sleep_time);
+
+/* LOGS */
+
+void	write_status(t_philo *philo, bool reaper_report, t_status status);
+
+
+/* WAITER */
+
+bool	has_simulation_stopped(t_data *data);
+void	*grim_reaper(void *args);
+
+
+
+
+
+
 
 
 

@@ -6,7 +6,7 @@
 #    By: mvomiero <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/04/04 15:47:25 by mvomiero          #+#    #+#              #
-#    Updated: 2023/04/05 11:19:24 by mvomiero         ###   ########.fr        #
+#    Updated: 2023/04/07 12:45:58 by mvomiero         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,7 +18,14 @@ CFLAGS	= -Werror -Wall -Wextra
 SRC_PATH = srcs/
 SRC		=	main.c \
 			init.c \
-			parsing.c
+			parsing.c \
+			exit_error.c \
+			utils.c \
+			dinner.c \
+			philosopher.c \
+			utils_time.c \
+			logs.c \
+			waiter.c
 SRCS	= $(addprefix $(SRC_PATH), $(SRC))
 
 OBJ_PATH = objs/
