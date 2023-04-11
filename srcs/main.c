@@ -6,7 +6,7 @@
 /*   By: mvomiero <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/04 16:31:18 by mvomiero          #+#    #+#             */
-/*   Updated: 2023/04/07 16:35:15 by mvomiero         ###   ########.fr       */
+/*   Updated: 2023/04/10 13:25:48 by mvomiero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,8 @@ int main(int ac, char **av)
 	data = init_data(ac, av);
 	if (!data)
 		return (EXIT_FAILURE);
-	if (!start_simulation(data))
+	if (!start_dinner(data))
 		return(EXIT_FAILURE);
-	stop_simulation(data);
+	stop_dinner(data);
 	return(EXIT_SUCCESS);
 }

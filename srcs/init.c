@@ -6,7 +6,7 @@
 /*   By: mvomiero <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/05 11:03:05 by mvomiero          #+#    #+#             */
-/*   Updated: 2023/04/05 15:45:58 by mvomiero         ###   ########.fr       */
+/*   Updated: 2023/04/10 13:21:23 by mvomiero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 static pthread_mutex_t	*init_forks(t_data *data)
 {
 	pthread_mutex_t	*forks;
-	unsigned int	i;
+	int	i;
 
 	forks = malloc(sizeof(pthread_mutex_t) * data->nb_philos);
 	if (!forks)
@@ -47,8 +47,8 @@ static void	assign_forks(t_philo *philo)
 
 static t_philo	**init_philosophers(t_data *data)
 {
-	t_philo			**philos;
-	unsigned int	i;
+	t_philo	**philos;
+	int		i;
 
 	philos = malloc(sizeof(t_philo) * data->nb_philos);
 	if (!philos)

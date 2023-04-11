@@ -6,38 +6,42 @@
 /*   By: mvomiero <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/05 16:03:15 by mvomiero          #+#    #+#             */
-/*   Updated: 2023/04/07 15:35:17 by mvomiero         ###   ########.fr       */
+/*   Updated: 2023/04/11 10:19:32 by mvomiero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
  
-bool	start_simulation(t_data *data)
+bool	start_dinner(t_data *data)
 {
-	unsigned int	i;
+	int	i;
 
 	data->start_time = get_time_in_ms();
 	// + (data->nb_philos * 2 * 10);
 	i = 0;
+	printf(" START TIME is: %ld", data->start_time);
 	while (i < data->nb_philos)
 	{
 		if (pthread_create(&data->philos[i]->thread, NULL,
 				&philosopher, data->philos[i]) != 0)
 			return (printf("philo: thread error!\n"), free_data(data), NULL);
+		printf("phlio thread initialized\n");
+		printf(" PHILO START TIME is: %ld", get_time_in_ms());
 		i++;
 	}
 	if (data->nb_philos > 1)
 	{
 		if (pthread_create(&data->grim_reaper, NULL,
-				&grim_reaper, data) != 0)
+				&waiter, data) != 0)
 			return (printf("philo: thread error!\n"), free_data(data), NULL);
 	}
+	
 	return (true);
 }
 
-void	stop_simulation(t_data	*data)
+void	stop_dinner(t_data	*data)
 {
-	unsigned int	i;
+	int	i;
 
 	i = 0;
 	while (i < data->nb_philos)

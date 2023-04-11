@@ -6,7 +6,7 @@
 /*   By: mvomiero <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/05 16:07:20 by mvomiero          #+#    #+#             */
-/*   Updated: 2023/04/07 16:17:00 by mvomiero         ###   ########.fr       */
+/*   Updated: 2023/04/08 16:18:06 by mvomiero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ static void	eat_sleep_routine(t_philo *philo)
 	write_status(philo, false, GOT_FORK_2);
 	write_status(philo, false, EATING);
 	pthread_mutex_lock(&philo->meal_time_lock);
+	printf("PHILO %d meal time lock\n", philo->id);
 	philo->last_meal = get_time_in_ms();
 	pthread_mutex_unlock(&philo->meal_time_lock);
 	philo_sleep(philo->data, philo->data->time_to_eat);

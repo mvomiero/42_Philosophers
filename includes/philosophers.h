@@ -6,7 +6,7 @@
 /*   By: mvomiero <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/05 10:35:50 by mvomiero          #+#    #+#             */
-/*   Updated: 2023/04/07 15:23:28 by mvomiero         ###   ########.fr       */
+/*   Updated: 2023/04/11 10:14:30 by mvomiero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,11 +29,14 @@ typedef struct s_philo	t_philo;
 typedef struct s_data
 {
 	time_t			start_time;
-	unsigned int	nb_philos;
+	int				nb_philos;
 	pthread_t		grim_reaper;
-	time_t			time_to_die;
-	time_t			time_to_eat;
-	time_t			time_to_sleep;
+	int				time_to_die;
+	//time_t			time_to_die;
+	//time_t			time_to_eat;
+	//time_t			time_to_sleep;
+	int				time_to_eat;
+	int				time_to_sleep;
 	int				must_eat_count;
 	bool			sim_stop;
 	pthread_mutex_t	sim_stop_lock;
@@ -45,9 +48,9 @@ typedef struct s_data
 typedef struct s_philo
 {
 	pthread_t			thread;
-	unsigned int		id;
-	unsigned int		times_ate;
-	unsigned int		fork[2];
+	int		id;
+	int		times_ate;
+	int		fork[2];
 	pthread_mutex_t		meal_time_lock;
 	time_t				last_meal;
 	t_data				*data;
@@ -80,8 +83,8 @@ void	destroy_mutexes(t_data *data);
 
 /* DINNER */
 
-bool	start_simulation(t_data *data);
-void	stop_simulation(t_data	*data);
+bool	start_dinner(t_data *data);
+void	stop_dinner(t_data	*data);
 
 
 /* PHILOSOPHER */
@@ -101,7 +104,7 @@ void	write_status(t_philo *philo, bool reaper_report, t_status status);
 /* WAITER */
 
 bool	has_simulation_stopped(t_data *data);
-void	*grim_reaper(void *args);
+void	*waiter(void *args);
 
 
 

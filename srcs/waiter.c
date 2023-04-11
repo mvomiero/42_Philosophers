@@ -6,7 +6,7 @@
 /*   By: mvomiero <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/07 12:45:37 by mvomiero          #+#    #+#             */
-/*   Updated: 2023/04/07 17:05:32 by mvomiero         ###   ########.fr       */
+/*   Updated: 2023/04/11 10:24:10 by mvomiero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ static bool kill_philo(t_philo *philo)
  */
 static bool end_condition_reached(t_data *data)
 {
-	unsigned int i;
+	int i;
 	bool all_ate_enough;
 
 	all_ate_enough = true;
@@ -74,10 +74,12 @@ static bool end_condition_reached(t_data *data)
 	while (i < data->nb_philos)
 	{
 		pthread_mutex_lock(&data->philos[i]->meal_time_lock);
+		//printf("WAITER - PHILO %d meal time lock\n", i);
+
 		if (kill_philo(data->philos[i]))
 			return (true);
 		if (data->must_eat_count != -1)
-			if (data->philos[i]->times_ate < (unsigned int)data->must_eat_count)
+			if (data->philos[i]->times_ate < data->must_eat_count)
 				all_ate_enough = false;
 		pthread_mutex_unlock(&data->philos[i]->meal_time_lock);
 		i++;
@@ -95,7 +97,7 @@ static bool end_condition_reached(t_data *data)
  *	be killed and if all philosophers ate enough. If one of those two
  *	end conditions are reached, it stops the simulation.
  */
-void *grim_reaper(void *args)
+void *waiter(void *args)
 {
 	t_data *data;
 
@@ -104,7 +106,8 @@ void *grim_reaper(void *args)
 		return (NULL);
 	set_sim_stop_flag(data, false);
 	// sim_start_delay(data->start_time);
-	printf("GRIM REAPER start time is: %ld\n", data->start_time);
+	printf("WAITER start time is: %ld\n", data->start_time);
+	//print_status("GRIM REAPER start time is: %ld\n", data->start_time);
 
 	while (true)
 	{

@@ -6,7 +6,7 @@
 /*   By: mvomiero <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/05 12:04:03 by mvomiero          #+#    #+#             */
-/*   Updated: 2023/04/07 15:22:30 by mvomiero         ###   ########.fr       */
+/*   Updated: 2023/04/10 13:23:37 by mvomiero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	free_data(t_data *data)
 {
-	unsigned int	i;
+	int	i;
 
 	if (!data)
 		return ;
@@ -36,7 +36,7 @@ void	free_data(t_data *data)
 
 void	destroy_mutexes(t_data *data)
 {
-	unsigned int	i;
+	int	i;
 
 	i = 0;
 	while (i < data->nb_philos)
