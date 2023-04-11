@@ -6,7 +6,7 @@
 /*   By: mvomiero <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/05 11:03:05 by mvomiero          #+#    #+#             */
-/*   Updated: 2023/04/10 13:21:23 by mvomiero         ###   ########.fr       */
+/*   Updated: 2023/04/11 16:49:24 by mvomiero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ static bool	init_global_mutexes(t_data *data)
 	data->fork_locks = init_forks(data);
 	if (!data->fork_locks)
 		return (false);
-	if (pthread_mutex_init(&data->sim_stop_lock, 0) != 0)
+	if (pthread_mutex_init(&data->dinner_stop_lock, 0) != 0)
 		return (printf("philo: mutex error!\n"), free_data(data), NULL);
 		// here you have to destroy the already allocated mutexes
 	if (pthread_mutex_init(&data->write_lock, 0) != 0)
@@ -104,6 +104,6 @@ t_data	*init_data(int ac, char **av)
 		return (NULL);
 	if (!init_global_mutexes(data))
 		return (NULL);
-	data->sim_stop = false;
+	data->dinner_stop = false;
 	return (data);
 }

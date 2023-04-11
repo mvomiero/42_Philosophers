@@ -6,11 +6,23 @@
 /*   By: mvomiero <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/05 16:07:20 by mvomiero          #+#    #+#             */
-/*   Updated: 2023/04/08 16:18:06 by mvomiero         ###   ########.fr       */
+/*   Updated: 2023/04/11 16:49:24 by mvomiero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
+
+bool dinner_is_over(t_data *data)
+{
+	bool r;
+
+	r = false;
+	pthread_mutex_lock(&data->dinner_stop_lock);
+	if (data->dinner_stop == true)
+		r = true;
+	pthread_mutex_unlock(&data->dinner_stop_lock);
+	return (r);
+}
 
 static void	eat_sleep_routine(t_philo *philo)
 {
@@ -24,7 +36,7 @@ static void	eat_sleep_routine(t_philo *philo)
 	philo->last_meal = get_time_in_ms();
 	pthread_mutex_unlock(&philo->meal_time_lock);
 	philo_sleep(philo->data, philo->data->time_to_eat);
-	if (has_simulation_stopped(philo->data) == false)
+	if (dinner_is_over(philo->data) == false)
 	{
 		pthread_mutex_lock(&philo->meal_time_lock);
 		philo->times_ate += 1;
@@ -94,7 +106,7 @@ void	*philosopher(void *args)
 		return (lone_philo_routine(philo));
 	else if (philo->id % 2)
 		think_routine(philo, true);
-	while (has_simulation_stopped(philo->data) == false)
+	while (dinner_is_over(philo->data) == false)
 	{
 		eat_sleep_routine(philo);
 		think_routine(philo, false);

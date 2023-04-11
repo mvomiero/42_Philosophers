@@ -6,7 +6,7 @@
 /*   By: mvomiero <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/05 16:21:58 by mvomiero          #+#    #+#             */
-/*   Updated: 2023/04/10 13:19:31 by mvomiero         ###   ########.fr       */
+/*   Updated: 2023/04/11 15:57:04 by mvomiero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void	philo_sleep(t_data *data, time_t sleep_time)
 	wake_up = get_time_in_ms() + sleep_time;
 	while (get_time_in_ms() < wake_up)
 	{
-		if (has_simulation_stopped(data))
+		if (dinner_is_over(data))
 			break ;
 		usleep(100);
 	}

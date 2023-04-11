@@ -6,7 +6,7 @@
 /*   By: mvomiero <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/05 10:35:50 by mvomiero          #+#    #+#             */
-/*   Updated: 2023/04/11 10:14:30 by mvomiero         ###   ########.fr       */
+/*   Updated: 2023/04/11 16:49:24 by mvomiero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,8 +38,8 @@ typedef struct s_data
 	int				time_to_eat;
 	int				time_to_sleep;
 	int				must_eat_count;
-	bool			sim_stop;
-	pthread_mutex_t	sim_stop_lock;
+	bool			dinner_stop;
+	pthread_mutex_t	dinner_stop_lock;
 	pthread_mutex_t	write_lock;
 	pthread_mutex_t	*fork_locks;
 	t_philo			**philos;
@@ -103,7 +103,7 @@ void	write_status(t_philo *philo, bool reaper_report, t_status status);
 
 /* WAITER */
 
-bool	has_simulation_stopped(t_data *data);
+bool	dinner_is_over(t_data *data);
 void	*waiter(void *args);
 
 

@@ -6,7 +6,7 @@
 /*   By: mvomiero <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/05 12:04:03 by mvomiero          #+#    #+#             */
-/*   Updated: 2023/04/10 13:23:37 by mvomiero         ###   ########.fr       */
+/*   Updated: 2023/04/11 16:49:24 by mvomiero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,5 +46,5 @@ void	destroy_mutexes(t_data *data)
 		i++;
 	}
 	pthread_mutex_destroy(&data->write_lock);
-	pthread_mutex_destroy(&data->sim_stop_lock);
+	pthread_mutex_destroy(&data->dinner_stop_lock);
 }
