@@ -6,7 +6,7 @@
 /*   By: mvomiero <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/05 10:35:50 by mvomiero          #+#    #+#             */
-/*   Updated: 2023/04/11 16:49:24 by mvomiero         ###   ########.fr       */
+/*   Updated: 2023/04/16 13:20:41 by mvomiero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,8 +40,11 @@ typedef struct s_data
 	int				must_eat_count;
 	bool			dinner_stop;
 	pthread_mutex_t	dinner_stop_lock;
+	// to stop the dinner
 	pthread_mutex_t	write_lock;
+	// to write all the logs
 	pthread_mutex_t	*fork_locks;
+	// to lock all the forks
 	t_philo			**philos;
 }	t_data;
 
@@ -52,6 +55,8 @@ typedef struct s_philo
 	int		times_ate;
 	int		fork[2];
 	pthread_mutex_t		meal_time_lock;
+	// to get the data regarding the meal. It is accessed by the philosopher
+	// but from the waiter that has to check at the same time.
 	time_t				last_meal;
 	t_data				*data;
 }	t_philo;
@@ -89,12 +94,12 @@ void	stop_dinner(t_data	*data);
 
 /* PHILOSOPHER */
 
-void	*philosopher(void *args);
+void	*philosopher_routine(void *args);
 
 /* UTILS_TIME */
 
 time_t	get_time_in_ms(void);
-void	philo_sleep(t_data *data, time_t sleep_time);
+void	philo_action(t_data *data, time_t sleep_time);
 
 /* LOGS */
 
@@ -104,7 +109,7 @@ void	write_status(t_philo *philo, bool reaper_report, t_status status);
 /* WAITER */
 
 bool	dinner_is_over(t_data *data);
-void	*waiter(void *args);
+void	*waiter_routine(void *args);
 
 
 

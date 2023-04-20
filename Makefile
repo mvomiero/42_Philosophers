@@ -6,7 +6,7 @@
 #    By: mvomiero <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/04/04 15:47:25 by mvomiero          #+#    #+#              #
-#    Updated: 2023/04/08 14:10:51 by mvomiero         ###   ########.fr        #
+#    Updated: 2023/04/20 13:34:36 by mvomiero         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -55,5 +55,27 @@ fclean: clean
 	rm -f $(NAME)
 
 re: fclean all
+
+test1:
+	@echo "Should not eat and should die"
+	./philo 1 800 200 200
+
+test2:
+	@echo "All alive!"
+	sleep 1
+	./philo 5 800 200 200
+
+test3:
+	./philo 5 800 200 200 7
+	@echo "Everybody ate!"
+
+test4:
+	@echo "All alive!"
+	sleep 1
+	./philo 4 410 200 200
+
+test5:
+	./philo 4 310 200 100
+	@echo "A philo should die"
 
 .PHONY: all re clean fclean

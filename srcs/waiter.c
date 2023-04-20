@@ -6,7 +6,7 @@
 /*   By: mvomiero <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/07 12:45:37 by mvomiero          #+#    #+#             */
-/*   Updated: 2023/04/11 16:52:55 by mvomiero         ###   ########.fr       */
+/*   Updated: 2023/04/16 12:54:45 by mvomiero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,7 +100,7 @@ static bool stop_condition_reached(t_data *data)
 	the start_dinner function is returned and in the main the stop_dinner 
 	function is started (where all the processes are joined).
  */
-void *waiter(void *args)
+void *waiter_routine(void *args)
 {
 	t_data *data;
 

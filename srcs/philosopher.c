@@ -6,7 +6,7 @@
 /*   By: mvomiero <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/05 16:07:20 by mvomiero          #+#    #+#             */
-/*   Updated: 2023/04/11 16:49:24 by mvomiero         ###   ########.fr       */
+/*   Updated: 2023/04/20 14:36:57 by mvomiero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,12 +30,13 @@ static void	eat_sleep_routine(t_philo *philo)
 	write_status(philo, false, GOT_FORK_1);
 	pthread_mutex_lock(&philo->data->fork_locks[philo->fork[1]]);
 	write_status(philo, false, GOT_FORK_2);
-	write_status(philo, false, EATING);
+	//write_status(philo, false, EATING);
 	pthread_mutex_lock(&philo->meal_time_lock);
-	printf("PHILO %d meal time lock\n", philo->id);
+	//printf("HEREEEEE %d meal time lock\n", philo->id);
 	philo->last_meal = get_time_in_ms();
+	write_status(philo, false, EATING);
 	pthread_mutex_unlock(&philo->meal_time_lock);
-	philo_sleep(philo->data, philo->data->time_to_eat);
+	philo_action(philo->data, philo->data->time_to_eat);
 	if (dinner_is_over(philo->data) == false)
 	{
 		pthread_mutex_lock(&philo->meal_time_lock);
@@ -45,63 +46,69 @@ static void	eat_sleep_routine(t_philo *philo)
 	write_status(philo, false, SLEEPING);
 	pthread_mutex_unlock(&philo->data->fork_locks[philo->fork[1]]);
 	pthread_mutex_unlock(&philo->data->fork_locks[philo->fork[0]]);
-	philo_sleep(philo->data, philo->data->time_to_sleep);
+	philo_action(philo->data, philo->data->time_to_sleep);
 }
 
-/* think_routine:
-*	Once a philosopher is done sleeping, he will think for a certain
-*	amount of time before starting to eat again.
-*	The time_to_think is calculated depending on how long it has been
-*	since the philosopher's last meal, the time_to_eat and the time_to_die
-*	to determine when the philosopher will be hungry again.
-*	This helps stagger philosopher's eating routines to avoid forks being
-*	needlessly monopolized by one philosopher to the detriment of others.
-*/
+/* think_routiine:
+	Thinking is the only action whose duration is not specified. In order to get
+	the philosopher to "pause" for a determined amount of time,
+	letting the forks free to the other	to eat, but at the same time 
+	to start to eat before the dieing. The formula is here under inside the 
+	function. 
+	The function accepts a bool as parameter deciding if the action will be 
+	printed or not, since the function is called two times:
+	at the beginning to let odd-id philos to start first, and then in the normal
+	philo routine.
+ */
 static void	think_routine(t_philo *philo, bool silent)
 {
 	time_t	time_to_think;
 
 	pthread_mutex_lock(&philo->meal_time_lock);
-	time_to_think = (philo->data->time_to_die
-			- (get_time_in_ms() - philo->last_meal)
-			- philo->data->time_to_eat) / 2;
+	time_to_think = (philo->data->time_to_die 
+				- philo->data->time_to_eat 	- philo->data->time_to_sleep) / 2;
 	pthread_mutex_unlock(&philo->meal_time_lock);
-/* 	if (time_to_think < 0)
-		time_to_think = 0;
-	if (time_to_think == 0 && silent == true)
-		time_to_think = 1;
-	if (time_to_think > 600)
-		time_to_think = 200; */
 	if (silent == false)
 		write_status(philo, false, THINKING);
-	philo_sleep(philo->data, time_to_think);
+	philo_action(philo->data, time_to_think);
 }
 
 static void	*lone_philo_routine(t_philo *philo)
 {
 	pthread_mutex_lock(&philo->data->fork_locks[philo->fork[0]]);
 	write_status(philo, false, GOT_FORK_1);
-	philo_sleep(philo->data, philo->data->time_to_die);
+	philo_action(philo->data, philo->data->time_to_die);
 	write_status(philo, false, DIED);
 	pthread_mutex_unlock(&philo->data->fork_locks[philo->fork[0]]);
 	return (NULL);
 }
 
-void	*philosopher(void *args)
+
+/* philosopher_routine:
+	the routine function for the philosphers threads. in the pthread_create 
+	function the t_philo struct is passed as argument, so first step is to cast
+	the void pointer to the actual datatype.
+	Follows a check for particular conditions, where the philosopher hasn't to 
+	eat or hasn't time to live, the function will just be returned.
+	After that, the last time is initialized to the genereal start time. It's 
+	here needed a mutex to protect the philo->last meal variable, that will be
+	accessed by the waiter to check the situation as well.
+	If the philosopher is just one, a particular routine is developed.
+	if the philospher has a odd id number, will start the routine by thinking, 
+	to allow the even id philophers to start first.
+	Then, the standard routine is started, until the dinner is not over.
+	At the end of the function, NULL is returned (= no problems).
+ */
+void	*philosopher_routine(void *args)
 {
 	t_philo	*philo;
 
 	philo = (t_philo *)args;
-	if (philo->data->must_eat_count == 0)
+	if (philo->data->must_eat_count == 0 || philo->data->time_to_die == 0)
 		return (NULL);
 	pthread_mutex_lock(&philo->meal_time_lock);
 	philo->last_meal = philo->data->start_time;
 	pthread_mutex_unlock(&philo->meal_time_lock);
-	printf("PHILO %d start time is: %ld\n", philo->id, philo->data->start_time);
-
-	//sim_start_delay(philo->data->start_time);
-	if (philo->data->time_to_die == 0)
-		return (NULL);
 	if (philo->data->nb_philos == 1)
 		return (lone_philo_routine(philo));
 	else if (philo->id % 2)
