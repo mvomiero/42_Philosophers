@@ -6,7 +6,7 @@
 /*   By: mvomiero <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/05 16:03:15 by mvomiero          #+#    #+#             */
-/*   Updated: 2023/04/20 12:42:30 by mvomiero         ###   ########.fr       */
+/*   Updated: 2023/04/29 13:22:40 by mvomiero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ bool	start_dinner(t_data *data)
 	}
 	if (data->nb_philos > 1)
 	{
-		if (pthread_create(&data->grim_reaper, NULL,
+		if (pthread_create(&data->waiter, NULL,
 				&waiter_routine, data) != 0)
 			return (printf("philo: thread error!\n"), free_data(data), NULL);
 	}
@@ -50,7 +50,19 @@ void	stop_dinner(t_data	*data)
 		i++;
 	}
 	if (data->nb_philos > 1)
-		pthread_join(data->grim_reaper, NULL);
+		pthread_join(data->waiter, NULL);
 	destroy_mutexes(data);
 	free_data(data);
+}
+
+bool dinner_is_over(t_data *data)
+{
+	bool r;
+
+	r = false;
+	pthread_mutex_lock(&data->dinner_stop_lock);
+	if (data->dinner_stop == true)
+		r = true;
+	pthread_mutex_unlock(&data->dinner_stop_lock);
+	return (r);
 }

@@ -6,33 +6,27 @@
 /*   By: mvomiero <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/05 16:07:20 by mvomiero          #+#    #+#             */
-/*   Updated: 2023/04/20 14:36:57 by mvomiero         ###   ########.fr       */
+/*   Updated: 2023/04/29 13:23:26 by mvomiero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
 
-bool dinner_is_over(t_data *data)
-{
-	bool r;
-
-	r = false;
-	pthread_mutex_lock(&data->dinner_stop_lock);
-	if (data->dinner_stop == true)
-		r = true;
-	pthread_mutex_unlock(&data->dinner_stop_lock);
-	return (r);
-}
-
-static void	eat_sleep_routine(t_philo *philo)
+/* eat_routine:
+	the most complicated of the three actions the philosopher has to perform:
+	- has to lock the two forks he needs (and print the corresponding status)
+	- has to do the action and print the status
+	- has to check that at the end of his meal the dinner is not over before 
+		loking his mutex to signalize that he has eaten.
+	- unlock the forks.
+ */
+static void	eat_routine(t_philo *philo)
 {
 	pthread_mutex_lock(&philo->data->fork_locks[philo->fork[0]]);
 	write_status(philo, false, GOT_FORK_1);
 	pthread_mutex_lock(&philo->data->fork_locks[philo->fork[1]]);
 	write_status(philo, false, GOT_FORK_2);
-	//write_status(philo, false, EATING);
 	pthread_mutex_lock(&philo->meal_time_lock);
-	//printf("HEREEEEE %d meal time lock\n", philo->id);
 	philo->last_meal = get_time_in_ms();
 	write_status(philo, false, EATING);
 	pthread_mutex_unlock(&philo->meal_time_lock);
@@ -43,9 +37,17 @@ static void	eat_sleep_routine(t_philo *philo)
 		philo->times_ate += 1;
 		pthread_mutex_unlock(&philo->meal_time_lock);
 	}
-	write_status(philo, false, SLEEPING);
 	pthread_mutex_unlock(&philo->data->fork_locks[philo->fork[1]]);
 	pthread_mutex_unlock(&philo->data->fork_locks[philo->fork[0]]);
+}
+
+/* sleep_routine:
+	the philosopher just print the sleeping status and performs the sleeping 
+	action for the required time
+ */
+static void	sleep_routine(t_philo *philo)
+{
+	write_status(philo, false, SLEEPING);
 	philo_action(philo->data, philo->data->time_to_sleep);
 }
 
@@ -83,7 +85,6 @@ static void	*lone_philo_routine(t_philo *philo)
 	return (NULL);
 }
 
-
 /* philosopher_routine:
 	the routine function for the philosphers threads. in the pthread_create 
 	function the t_philo struct is passed as argument, so first step is to cast
@@ -115,7 +116,8 @@ void	*philosopher_routine(void *args)
 		think_routine(philo, true);
 	while (dinner_is_over(philo->data) == false)
 	{
-		eat_sleep_routine(philo);
+		eat_routine(philo);
+		sleep_routine(philo);
 		think_routine(philo, false);
 	}
 	return (NULL);

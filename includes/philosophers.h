@@ -6,7 +6,7 @@
 /*   By: mvomiero <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/05 10:35:50 by mvomiero          #+#    #+#             */
-/*   Updated: 2023/04/16 13:20:41 by mvomiero         ###   ########.fr       */
+/*   Updated: 2023/04/29 13:01:00 by mvomiero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ typedef struct s_data
 {
 	time_t			start_time;
 	int				nb_philos;
-	pthread_t		grim_reaper;
+	pthread_t		waiter;
 	int				time_to_die;
 	//time_t			time_to_die;
 	//time_t			time_to_eat;
