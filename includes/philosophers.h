@@ -6,7 +6,7 @@
 /*   By: mvomiero <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/05 10:35:50 by mvomiero          #+#    #+#             */
-/*   Updated: 2023/05/05 12:58:36 by mvomiero         ###   ########.fr       */
+/*   Updated: 2023/05/05 13:19:28 by mvomiero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,10 @@ typedef enum e_status
 	GOT_FORK_1 = 4,
 	GOT_FORK_2 = 5
 }	t_status;
+
+/* INPUT - CHECK */
+
+bool	input_check(int ac, char **av);
 
 /* PARSING */
 

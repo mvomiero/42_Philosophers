@@ -6,7 +6,7 @@
 /*   By: mvomiero <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/05 12:08:28 by mvomiero          #+#    #+#             */
-/*   Updated: 2023/05/05 13:03:32 by mvomiero         ###   ########.fr       */
+/*   Updated: 2023/05/05 13:22:03 by mvomiero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,4 +47,18 @@ bool	dinner_is_over(t_data *data)
 		r = true;
 	pthread_mutex_unlock(&data->dinner_stop_mutex);
 	return (r);
+}
+
+bool	input_check(int ac, char **av)
+{
+	int	i;
+
+	i = 1;
+	while (i < ac)
+	{
+		if (!int_atoi(av[i]))
+			return (false);
+		i++;
+	}
+	return (true);
 }
