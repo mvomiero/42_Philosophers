@@ -6,7 +6,7 @@
 /*   By: mvomiero <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/07 11:32:12 by mvomiero          #+#    #+#             */
-/*   Updated: 2023/05/05 12:58:59 by mvomiero         ###   ########.fr       */
+/*   Updated: 2023/05/05 14:12:53 by mvomiero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,5 +44,12 @@ void	write_status(t_philo *philo, t_status status)
 		print_status(philo, "is thinking");
 	else if (status == GOT_FORK_1 || status == GOT_FORK_2)
 		print_status(philo, "has taken a fork");
+	pthread_mutex_unlock(&philo->data->log_mutex);
+}
+
+void	write_status_waiter_philo_died(t_philo *philo)
+{
+	pthread_mutex_lock(&philo->data->log_mutex);
+	print_status(philo, "died");
 	pthread_mutex_unlock(&philo->data->log_mutex);
 }

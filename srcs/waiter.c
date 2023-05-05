@@ -6,7 +6,7 @@
 /*   By: mvomiero <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/07 12:45:37 by mvomiero          #+#    #+#             */
-/*   Updated: 2023/05/05 13:01:39 by mvomiero         ###   ########.fr       */
+/*   Updated: 2023/05/05 14:13:45 by mvomiero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ static bool	check_kill_philo(t_philo *philo)
 	if ((time - philo->last_meal) >= philo->data->time_to_die)
 	{
 		dinner_stop_flag(philo->data, true);
-		write_status(philo, DIED);
+		write_status_waiter_philo_died(philo);
 		pthread_mutex_unlock(&philo->meal_time_lock);
 		return (true);
 	}
