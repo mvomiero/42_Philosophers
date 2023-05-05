@@ -6,7 +6,7 @@
 /*   By: mvomiero <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/05 10:35:50 by mvomiero          #+#    #+#             */
-/*   Updated: 2023/05/05 12:19:40 by mvomiero         ###   ########.fr       */
+/*   Updated: 2023/05/05 12:41:43 by mvomiero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,6 @@
 # include <sys/time.h>
 # include <stdbool.h>
 
-
 /* STRUCTS */
 
 typedef struct s_philo	t_philo;
@@ -32,9 +31,6 @@ typedef struct s_data
 	int				nb_philos;
 	pthread_t		waiter;
 	int				time_to_die;
-	//time_t			time_to_die;
-	//time_t			time_to_eat;
-	//time_t			time_to_sleep;
 	int				time_to_eat;
 	int				time_to_sleep;
 	int				must_eat_count;
@@ -71,7 +67,6 @@ typedef enum e_status
 	GOT_FORK_2 = 5
 }	t_status;
 
-
 /* PARSING */
 
 int	int_atoi(char *str);
@@ -85,12 +80,10 @@ t_data	*init_data(int ac, char **av);
 void	free_data(t_data *data);
 void	destroy_mutexes(t_data *data);
 
-
 /* DINNER */
 
 bool	start_dinner(t_data *data);
 void	stop_dinner(t_data	*data);
-
 
 /* PHILOSOPHER */
 
@@ -110,13 +103,5 @@ void	write_status(t_philo *philo, t_status status);
 
 bool	dinner_is_over(t_data *data);
 void	*waiter_routine(void *args);
-
-
-
-
-
-
-
-
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: mvomiero <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/05 16:03:15 by mvomiero          #+#    #+#             */
-/*   Updated: 2023/05/05 11:36:11 by mvomiero         ###   ########.fr       */
+/*   Updated: 2023/05/05 12:55:07 by mvomiero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,10 @@ bool	start_dinner(t_data *data)
 /* stop_dinner:
 	stops the dinner: all threads are joined, mutexes are destroyed, data is 
 	freed.
+	Joining a thread means to wait for the specified thread to teminate. 
+	It's similar to a wait call for children processes in the main process.
+	In this way, we are sure that all threads are terminated and we can safely
+	stop the dinner and free the data.
  */
 void	stop_dinner(t_data	*data)
 {
