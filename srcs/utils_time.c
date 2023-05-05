@@ -6,12 +6,17 @@
 /*   By: mvomiero <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/05 16:21:58 by mvomiero          #+#    #+#             */
-/*   Updated: 2023/04/16 13:21:23 by mvomiero         ###   ########.fr       */
+/*   Updated: 2023/05/05 12:36:12 by mvomiero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
 
+/* get_time_in_ms:
+	gets the time in seconds and microseconds since the Epoch (1970-01-01 
+	00:00:00 +0000 (UTC)). It's stored in the timeval struct. The operations
+	are to get the value in milliseconds (required from the assignement).
+ */
 time_t	get_time_in_ms(void)
 {
 	struct timeval		tv;
@@ -20,6 +25,9 @@ time_t	get_time_in_ms(void)
 	return ((tv.tv_sec * 1000) + (tv.tv_usec / 1000));
 }
 
+/* philo_action:
+	a philosopher performs an action for a given amount of time.
+ */
 void	philo_action(t_data *data, time_t action_time)
 {
 	time_t	stop_action;

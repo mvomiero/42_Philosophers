@@ -6,7 +6,7 @@
 /*   By: mvomiero <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/05 16:07:20 by mvomiero          #+#    #+#             */
-/*   Updated: 2023/04/29 13:23:26 by mvomiero         ###   ########.fr       */
+/*   Updated: 2023/05/05 12:22:38 by mvomiero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,12 +23,12 @@
 static void	eat_routine(t_philo *philo)
 {
 	pthread_mutex_lock(&philo->data->fork_locks[philo->fork[0]]);
-	write_status(philo, false, GOT_FORK_1);
+	write_status(philo, GOT_FORK_1);
 	pthread_mutex_lock(&philo->data->fork_locks[philo->fork[1]]);
-	write_status(philo, false, GOT_FORK_2);
+	write_status(philo, GOT_FORK_2);
 	pthread_mutex_lock(&philo->meal_time_lock);
 	philo->last_meal = get_time_in_ms();
-	write_status(philo, false, EATING);
+	write_status(philo, EATING);
 	pthread_mutex_unlock(&philo->meal_time_lock);
 	philo_action(philo->data, philo->data->time_to_eat);
 	if (dinner_is_over(philo->data) == false)
@@ -47,7 +47,7 @@ static void	eat_routine(t_philo *philo)
  */
 static void	sleep_routine(t_philo *philo)
 {
-	write_status(philo, false, SLEEPING);
+	write_status(philo, SLEEPING);
 	philo_action(philo->data, philo->data->time_to_sleep);
 }
 
@@ -71,16 +71,16 @@ static void	think_routine(t_philo *philo, bool silent)
 				- philo->data->time_to_eat 	- philo->data->time_to_sleep) / 2;
 	pthread_mutex_unlock(&philo->meal_time_lock);
 	if (silent == false)
-		write_status(philo, false, THINKING);
+		write_status(philo, THINKING);
 	philo_action(philo->data, time_to_think);
 }
 
 static void	*lone_philo_routine(t_philo *philo)
 {
 	pthread_mutex_lock(&philo->data->fork_locks[philo->fork[0]]);
-	write_status(philo, false, GOT_FORK_1);
+	write_status(philo, GOT_FORK_1);
 	philo_action(philo->data, philo->data->time_to_die);
-	write_status(philo, false, DIED);
+	write_status(philo, DIED);
 	pthread_mutex_unlock(&philo->data->fork_locks[philo->fork[0]]);
 	return (NULL);
 }

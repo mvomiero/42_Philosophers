@@ -6,34 +6,34 @@
 /*   By: mvomiero <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/07 11:32:12 by mvomiero          #+#    #+#             */
-/*   Updated: 2023/05/05 11:51:24 by mvomiero         ###   ########.fr       */
+/*   Updated: 2023/05/05 12:27:18 by mvomiero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
 
+/* print_status:
+	gets the time and prints the status of the philosopher (philo_id + 1 since
+	it starts from philo 1 and not philo 0)
+ */
 static void	print_status(t_philo *philo, char *str)
 {
 	printf("%ld %d %s\n", get_time_in_ms() - philo->data->start_time,
 		philo->id + 1, str);
 }
 
-void	write_status(t_philo *philo, bool reaper_report, t_status status)
+/* write_status:
+	loks the log mutex and prints the corresponding status. If the dinner is 
+	over just returns.
+ */
+void	write_status(t_philo *philo, t_status status)
 {
 	pthread_mutex_lock(&philo->data->log_mutex);
-	// REMEMBER TO COMMENT OUT THIS BLOCK OF CODE
-	(void)reaper_report;
-	if (dinner_is_over(philo->data) == true && reaper_report == false)
+	if (dinner_is_over(philo->data) == true)
 	{
 		pthread_mutex_unlock(&philo->data->log_mutex);
 		return ;
 	}
-/* 	if (DEBUG_FORMATTING == true)
-	{
-		write_status_debug(philo, status);
-		pthread_mutex_unlock(&philo->data->log_mutex);
-		return ;
-	} */
 	if (status == DIED)
 		print_status(philo, "died");
 	else if (status == EATING)

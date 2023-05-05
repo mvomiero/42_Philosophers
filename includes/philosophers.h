@@ -6,7 +6,7 @@
 /*   By: mvomiero <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/05 10:35:50 by mvomiero          #+#    #+#             */
-/*   Updated: 2023/05/05 11:49:18 by mvomiero         ###   ########.fr       */
+/*   Updated: 2023/05/05 12:19:40 by mvomiero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,7 +103,7 @@ void	philo_action(t_data *data, time_t sleep_time);
 
 /* LOGS */
 
-void	write_status(t_philo *philo, bool reaper_report, t_status status);
+void	write_status(t_philo *philo, t_status status);
 
 
 /* WAITER */
