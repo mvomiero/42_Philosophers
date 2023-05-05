@@ -6,7 +6,7 @@
 /*   By: mvomiero <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/05 16:03:15 by mvomiero          #+#    #+#             */
-/*   Updated: 2023/05/05 12:55:07 by mvomiero         ###   ########.fr       */
+/*   Updated: 2023/05/05 13:01:56 by mvomiero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,6 @@ bool	start_dinner(t_data *data)
 				&waiter_routine, data) != 0)
 			return (printf("philo: thread error!\n"), free_data(data), NULL);
 	}
-	
 	return (true);
 }
 

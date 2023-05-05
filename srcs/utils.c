@@ -6,7 +6,7 @@
 /*   By: mvomiero <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/05 12:08:28 by mvomiero          #+#    #+#             */
-/*   Updated: 2023/05/05 11:49:04 by mvomiero         ###   ########.fr       */
+/*   Updated: 2023/05/05 13:03:32 by mvomiero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,9 +37,9 @@ int	int_atoi(char *str)
 	bool used to check if the dinner is over (checking the data->dinner_stop 
 	bool). just returns true if the dinner is over.
  */
-bool dinner_is_over(t_data *data)
+bool	dinner_is_over(t_data *data)
 {
-	bool r;
+	bool	r;
 
 	r = false;
 	pthread_mutex_lock(&data->dinner_stop_mutex);

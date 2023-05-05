@@ -6,18 +6,17 @@
 /*   By: mvomiero <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/07 12:45:37 by mvomiero          #+#    #+#             */
-/*   Updated: 2023/05/05 12:22:38 by mvomiero         ###   ########.fr       */
+/*   Updated: 2023/05/05 13:01:39 by mvomiero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
 
-
 /* dinner_stop_flag:
 	uses the corresponding mutex to set the dinner_stop bool according to the 
 	state bool passed as parameter.
  */
-static void dinner_stop_flag(t_data *data, bool state)
+static void	dinner_stop_flag(t_data *data, bool state)
 {
 	pthread_mutex_lock(&data->dinner_stop_mutex);
 	data->dinner_stop = state;
@@ -32,15 +31,15 @@ static void dinner_stop_flag(t_data *data, bool state)
 	the waiter will then know (thanks to the stop_condition_reached function) 
 	that the dinner has to stop.
  */
-static bool check_kill_philo(t_philo *philo)
+static bool	check_kill_philo(t_philo *philo)
 {
-	time_t time;
+	time_t	time;
 
 	time = get_time_in_ms();
 	if ((time - philo->last_meal) >= philo->data->time_to_die)
 	{
 		dinner_stop_flag(philo->data, true);
-		write_status(philo,DIED);
+		write_status(philo, DIED);
 		pthread_mutex_unlock(&philo->meal_time_lock);
 		return (true);
 	}
@@ -60,10 +59,10 @@ static bool check_kill_philo(t_philo *philo)
 	return value is true if one of the stopping conditions is met, false if the
 	funcions runs until the end. 
  */
-static bool stop_condition_reached(t_data *data)
+static bool	stop_condition_reached(t_data *data)
 {
-	int i;
-	bool all_ate_enough;
+	int		i;
+	bool	all_ate_enough;
 
 	all_ate_enough = true;
 	i = 0;
@@ -100,20 +99,18 @@ static bool stop_condition_reached(t_data *data)
 	the start_dinner function is returned and in the main the stop_dinner 
 	function is started (where all the processes are joined).
  */
-void *waiter_routine(void *args)
+void	*waiter_routine(void *args)
 {
-	t_data *data;
+	t_data	*data;
 
 	data = (t_data *)args;
 	if (data->must_eat_count == 0)
 		return (NULL);
 	dinner_stop_flag(data, false);
-	while (true)
+	while (1)
 	{
 		if (stop_condition_reached(data) == true)
 			return (NULL);
 		usleep(1000);
 	}
-	//return (NULL);
-	// dont need this return since the other is an infinite loop
 }

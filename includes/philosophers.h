@@ -6,7 +6,7 @@
 /*   By: mvomiero <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/05 10:35:50 by mvomiero          #+#    #+#             */
-/*   Updated: 2023/05/05 12:41:43 by mvomiero         ###   ########.fr       */
+/*   Updated: 2023/05/05 12:58:36 by mvomiero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,25 +36,20 @@ typedef struct s_data
 	int				must_eat_count;
 	bool			dinner_stop;
 	pthread_mutex_t	dinner_stop_mutex;
-	// to stop the dinner
 	pthread_mutex_t	log_mutex;
-	// to write all the logs
 	pthread_mutex_t	*fork_locks;
-	// to lock all the forks
 	t_philo			**philos;
 }	t_data;
 
 typedef struct s_philo
 {
-	pthread_t			thread;
-	int		id;
-	int		times_ate;
-	int		fork[2];
-	pthread_mutex_t		meal_time_lock;
-	// to get the data regarding the meal. It is accessed by the philosopher
-	// but from the waiter that has to check at the same time.
-	time_t				last_meal;
-	t_data				*data;
+	pthread_t		thread;
+	int				id;
+	int				times_ate;
+	int				fork[2];
+	pthread_mutex_t	meal_time_lock;
+	time_t			last_meal;
+	t_data			*data;
 }	t_philo;
 
 typedef enum e_status
@@ -69,7 +64,7 @@ typedef enum e_status
 
 /* PARSING */
 
-int	int_atoi(char *str);
+int		int_atoi(char *str);
 
 /* INITIALIZATION */
 
@@ -97,7 +92,6 @@ void	philo_action(t_data *data, time_t sleep_time);
 /* LOGS */
 
 void	write_status(t_philo *philo, t_status status);
-
 
 /* WAITER */
 
