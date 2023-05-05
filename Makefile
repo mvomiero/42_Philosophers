@@ -6,7 +6,7 @@
 #    By: mvomiero <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/04/04 15:47:25 by mvomiero          #+#    #+#              #
-#    Updated: 2023/04/20 13:34:36 by mvomiero         ###   ########.fr        #
+#    Updated: 2023/05/05 11:40:59 by mvomiero         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,8 +16,7 @@ CFLAGS	= -Werror -Wall -Wextra -pthread -fsanitize=thread -g
 
 SRC_PATH = srcs/
 SRC		=	main.c \
-			init.c \
-			parsing.c \
+			init_parsing.c \
 			exit_error.c \
 			utils.c \
 			dinner.c \

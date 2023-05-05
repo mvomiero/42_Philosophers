@@ -6,7 +6,7 @@
 /*   By: mvomiero <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/05 10:35:50 by mvomiero          #+#    #+#             */
-/*   Updated: 2023/04/29 13:01:00 by mvomiero         ###   ########.fr       */
+/*   Updated: 2023/05/05 11:49:18 by mvomiero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,9 +39,9 @@ typedef struct s_data
 	int				time_to_sleep;
 	int				must_eat_count;
 	bool			dinner_stop;
-	pthread_mutex_t	dinner_stop_lock;
+	pthread_mutex_t	dinner_stop_mutex;
 	// to stop the dinner
-	pthread_mutex_t	write_lock;
+	pthread_mutex_t	log_mutex;
 	// to write all the logs
 	pthread_mutex_t	*fork_locks;
 	// to lock all the forks

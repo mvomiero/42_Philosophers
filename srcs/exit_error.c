@@ -6,7 +6,7 @@
 /*   By: mvomiero <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/05 12:04:03 by mvomiero          #+#    #+#             */
-/*   Updated: 2023/04/11 16:49:24 by mvomiero         ###   ########.fr       */
+/*   Updated: 2023/05/05 11:49:18 by mvomiero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,6 @@ void	destroy_mutexes(t_data *data)
 		pthread_mutex_destroy(&data->philos[i]->meal_time_lock);
 		i++;
 	}
-	pthread_mutex_destroy(&data->write_lock);
-	pthread_mutex_destroy(&data->dinner_stop_lock);
+	pthread_mutex_destroy(&data->log_mutex);
+	pthread_mutex_destroy(&data->dinner_stop_mutex);
 }

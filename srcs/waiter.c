@@ -6,7 +6,7 @@
 /*   By: mvomiero <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/07 12:45:37 by mvomiero          #+#    #+#             */
-/*   Updated: 2023/04/16 12:54:45 by mvomiero         ###   ########.fr       */
+/*   Updated: 2023/05/05 11:49:04 by mvomiero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,9 @@
  */
 static void dinner_stop_flag(t_data *data, bool state)
 {
-	pthread_mutex_lock(&data->dinner_stop_lock);
+	pthread_mutex_lock(&data->dinner_stop_mutex);
 	data->dinner_stop = state;
-	pthread_mutex_unlock(&data->dinner_stop_lock);
+	pthread_mutex_unlock(&data->dinner_stop_mutex);
 }
 
 /* check_kill_philo:
